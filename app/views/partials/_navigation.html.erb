@@ -1,0 +1,12 @@
+<% if user_signed_in? %>
+  <li class="col-md">
+    <%= link_to "cerrar sesion",destroy_user_session_path, method: :delete %>
+  </li>
+  <%else%>
+    <li class="col-md">
+      <%= link_to "iniciar sesion",new_user_session_path %>
+    </li>
+      <li class="col-md">
+        <%= link_to "crear cuenta",new_user_registration_path %>
+      </li>
+<%end%>
