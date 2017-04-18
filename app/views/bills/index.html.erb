@@ -1,2 +1,10 @@
-<h1>Bills#index</h1>
-<p>Find me in app/views/bills/index.html.erb</p>
+<div class="field text-center ">
+  ESTA FACTURA PERTENECE A
+</div >
+<div class="field text-center ">
+  <% @bills.each do |bill| %>
+    <h1>
+      <%= bill.rfc  %>
+    </h1>
+  <%end%>
+</div >

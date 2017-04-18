@@ -16,6 +16,21 @@ gem 'puma', '~> 3.0'
 
 gem 'devise'
 
+gem 'simple_form'
+
+gem 'country_select'
+
+
+
+gem 'momentjs-rails'
+
+gem 'bootstrap3-datetimepicker-rails'
+
+
+
+
+
+
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

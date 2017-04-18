@@ -10,7 +10,60 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405214147) do
+ActiveRecord::Schema.define(version: 20170412132152) do
+
+  create_table "bills", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "client_id"
+    t.string   "date"
+    t.integer  "invoice_number"
+    t.string   "address"
+    t.string   "city"
+    t.integer  "rfc"
+    t.integer  "postalcode"
+    t.integer  "quantity"
+    t.text     "description",     limit: 65535
+    t.integer  "price"
+    t.integer  "total"
+    t.integer  "subtotal"
+    t.text     "observations",    limit: 65535
+    t.integer  "taxas"
+    t.integer  "date_of_issue"
+    t.integer  "date_expiration"
+    t.integer  "billing_period"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["client_id"], name: "index_bills_on_client_id", using: :btree
+    t.index ["user_id"], name: "index_bills_on_user_id", using: :btree
+  end
+
+  create_table "clients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "mail"
+    t.integer  "date_expiration"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "name"
+    t.string   "lastname"
+    t.integer  "age"
+    t.string   "address"
+    t.string   "job"
+    t.string   "company_name"
+    t.integer  "phone"
+    t.string   "country"
+    t.integer  "postalcode"
+    t.index ["email"], name: "index_clients_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_clients_on_reset_password_token", unique: true, using: :btree
+  end
 
   create_table "countries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "code"
@@ -39,7 +92,9 @@ ActiveRecord::Schema.define(version: 20170405214147) do
     t.string   "address"
     t.string   "job"
     t.string   "civil_status"
-    t.string   "country"
+    t.integer  "country_id"
+    t.string   "company_name"
+    t.index ["country_id"], name: "index_users_on_country_id", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
