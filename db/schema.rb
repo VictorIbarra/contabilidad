@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412132152) do
+ActiveRecord::Schema.define(version: 20170420153234) do
 
   create_table "bills", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20170412132152) do
     t.string   "city"
     t.integer  "rfc"
     t.integer  "postalcode"
-    t.integer  "quantity"
     t.text     "description",     limit: 65535
     t.integer  "price"
     t.integer  "total"
@@ -61,6 +60,7 @@ ActiveRecord::Schema.define(version: 20170412132152) do
     t.integer  "phone"
     t.string   "country"
     t.integer  "postalcode"
+    t.integer  "rfc"
     t.index ["email"], name: "index_clients_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_clients_on_reset_password_token", unique: true, using: :btree
   end
@@ -68,6 +68,25 @@ ActiveRecord::Schema.define(version: 20170412132152) do
   create_table "countries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "code"
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_bills", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "bill_id"
+    t.integer  "product_id"
+    t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "quantity"
+    t.index ["bill_id"], name: "index_product_bills_on_bill_id", using: :btree
+    t.index ["product_id"], name: "index_product_bills_on_product_id", using: :btree
+  end
+
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.integer  "price"
+    t.boolean  "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

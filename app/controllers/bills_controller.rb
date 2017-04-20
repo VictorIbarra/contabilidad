@@ -1,7 +1,10 @@
 class BillsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => []
+
   def index
     @bills = Bill.all
+
+
   end
 
   def show
@@ -11,19 +14,30 @@ class BillsController < ApplicationController
   def new
     @bill = Bill.new
     @clients = Client.all
-    @users = User.all
+    @product  = Product.where(:active => true)
+
 
   end
 
-  def create
-   @bill = Bill.new(bill_params)
 
-    if @bill.save
-      redirect_to @bill
-    else
-      render :bill
-    end
- end
+  def ws_get_total
+    puts   params[:product_id]
+
+    render :json => {:succes => 1}, :callback => params[:callback]
+  end
+
+
+
+
+  def create
+    @bill = Bill.new(bill_params)
+    @bill.date_expiration = Date.today
+      if @bill.save
+        redirect_to @bill
+      else
+        render :bill
+      end
+  end
 
   def destroy
    @bill = bill.find(params[:id])
@@ -33,6 +47,6 @@ class BillsController < ApplicationController
 
  private
   def bill_params
-    params.require(:bill).permit(:user_id,:client_id,:date,:invoice_number,:address,:city,:phone,:company_name,:rfc,:postalcode,:quantity,:description,:price,:mail,:total,:subtotal,:observations,:taxas,:date_of_issue,:date_expiration,:billing_period)
+    params.require(:bill).permit(:user_id,:client_id,:date,:invoice_number,:address,:city,:rfc,:postalcode,:quantity,:description,:price,:total,:subtotal,:observations,:taxas,:date_of_issue,:date_expiration,:billing_period)
     end
 end
